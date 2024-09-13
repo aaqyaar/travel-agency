@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('customers', function(Blueprint $table) {
+        Schema::create('licenses', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->nullable()->unique();
-            $table->string('phone_number')->unique();
-            $table->text('address')->nullable();
-            $table->foreignId('registered_by')->nullable()->constrained('users');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->date('expiry_date');
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('customers');
+        Schema::dropIfExists('licenses');
     }
 };
