@@ -2,10 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\CustomerResource\Pages;
-use App\Filament\Resources\CustomerResource\RelationManagers;
-use App\Models\Customer;
-use App\Models\User;
+use App\Filament\Resources\SupplierResource\Pages;
+use App\Filament\Resources\SupplierResource\RelationManagers;
+use App\Models\Supplier;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,11 +12,12 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Illuminate\Support\Facades\Auth;
+use Ysfkaya\FilamentPhoneInput\Forms\PhoneInput;
 
-class CustomerResource extends Resource
+
+class SupplierResource extends Resource
 {
-    protected static ?string $model = Customer::class;
+    protected static ?string $model = Supplier::class;
 
     protected static ?string $navigationGroup = 'Business Partners';
 
@@ -29,22 +29,19 @@ class CustomerResource extends Resource
                     ->label('Name')
                     ->required()
                     ->placeholder('John Doe'),
+                PhoneInput::make('contact_number')
+                    ->defaultCountry("SO"),
                 Forms\Components\TextInput::make('email')
                     ->label('Email')
                     ->email()
-                    ->unique(Customer::class, 'email')
-                    ->placeholder('9vXUe@example.com'),
-
-                Forms\Components\TextInput::make('phone_number')
-                    ->label('Phone Number')
-                    ->tel()
                     ->required()
-                    ->unique(Customer::class, 'phone_number'),
-                Forms\Components\TextInput::make('address')
-                    ->label('Address'),
-
-                Forms\Components\Hidden::make('registered_by')
-                    ->default(fn () => Auth::id()),
+                    ->placeholder('9vXUe@example.com'),
+                Forms\Components\TextInput::make('opening_balance')
+                    ->label('Opening Balance')
+                    ->placeholder('0.00')->default('0.00'),
+                Forms\Components\TextInput::make('unpaid_balance')
+                    ->label('Unpaid Balance')
+                    ->placeholder('0.00')->default('0.00'),
             ]);
     }
 
@@ -55,25 +52,25 @@ class CustomerResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->label('Name')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('contact_number')
+                    ->label('Contact Number')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('email')
-                    ->label('email')
+                    ->label('Email')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('phone_number')
-                    ->label('Phone Number')
+                Tables\Columns\TextColumn::make('opening_balance')
+                    ->label('Opening Balance')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('address')
-                    ->label('Address')
-                    ->searchable()
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('unpaid_balance')
+                    ->label('Unpaid Balance')
+                    ->searchable(),
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('registered_by')
-                    ->relationship(User::class, 'id')
-                    ->multiple()
-                    ->label('Registered By'),
+                //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -92,9 +89,7 @@ class CustomerResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListCustomers::route('/'),
-            'create' => Pages\CreateCustomer::route('/create'),
-            'edit' => Pages\EditCustomer::route('/{record}/edit'),
+            'index' => Pages\ListSuppliers::route('/'),
         ];
     }
 }
