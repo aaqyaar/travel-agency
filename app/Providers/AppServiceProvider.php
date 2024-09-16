@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use Filament\Facades\Filament;
+use Filament\Pages\Dashboard;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -17,8 +20,11 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-    public function boot(): void
+    public function boot()
     {
-        //
+        Filament::registerPages([
+            Dashboard::class,
+        ]);
+        Gate::policy(\Spatie\Permission\Models\Role::class, \App\Policies\RolePolicy::class);
     }
 }

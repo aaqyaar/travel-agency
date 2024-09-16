@@ -13,6 +13,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
+use Ysfkaya\FilamentPhoneInput\Forms\PhoneInput;
 
 class UserResource extends Resource
 {
@@ -32,10 +33,9 @@ class UserResource extends Resource
                     ->unique('users', 'email')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('phone')
-                    ->tel()
-                    ->required()
-                    ->maxLength(255),
+                PhoneInput::make('phone')->defaultCountry('SO')
+                    ->required(),
+
                 Forms\Components\TextInput::make('password')                
                     ->password()
                     ->required()
@@ -43,6 +43,9 @@ class UserResource extends Resource
 
                 Forms\Components\Hidden::make('registered_by')
                     ->default(fn () => Auth::id()),
+
+                Forms\Components\Select::make('roles')
+                    ->relationship('roles', 'name'),
             ]);
     }
 
