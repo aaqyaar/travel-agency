@@ -10,6 +10,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Hash;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
@@ -35,15 +36,20 @@ class UserResource extends Resource
                     ->maxLength(255),
                 PhoneInput::make('phone')->defaultCountry('SO')
                     ->required(),
-
-                Forms\Components\TextInput::make('password')                
-                    ->password()
-                    ->required()
-                    ->maxLength(255),
-
+                Forms\Components\TextInput::make('password')->password()->required()->dehydrateStateUsing(fn ($state) => Hash::make($state))
+                    ->dehydrated(fn ($state) => filled($state))
+                    ->required(fn (string $context): bool => $context === 'create'),
+                
                 Forms\Components\Hidden::make('registered_by')
-                    ->default(fn () => Auth::id()),
-
+                    ->default(fn () => auth()->id()),
+                
+                Forms\Components\ToggleButtons::make('status')
+                    ->default('active')
+                    ->inline()
+                    ->options([
+                        'active' => 'Active',
+                        'blocked' => 'Blocked'
+                    ]),
                 Forms\Components\Select::make('roles')
                     ->relationship('roles', 'name'),
             ]);

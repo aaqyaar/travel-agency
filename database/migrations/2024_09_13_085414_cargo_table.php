@@ -23,7 +23,15 @@ return new class extends Migration
             $table->float('shipping_price');
             $table->float('dispatch_cost');
             $table->json('other_expenses')->nullable();
+            $table->float('per_weight_cost');
+            $table->string('discount')->nullable();
+            $table->float('collected_amount');
             $table->float('total_amount');
+            $table->float('total_expenses');
+            $table->float('total_revenue');
+            $table->enum('payment_status',['paid', 'unpaid', 'partially_paid']);
+            $table->float('partially_paid_amount')->nullable();
+            $table->float('remaining_amount')->nullable();
             $table->boolean('payment_received')->default(false);
             $table->date('dispatch_date');
             $table->string('shipping_status');

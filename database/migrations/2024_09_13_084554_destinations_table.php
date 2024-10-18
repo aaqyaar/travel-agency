@@ -13,10 +13,15 @@ return new class extends Migration
     {
         Schema::create('destinations', function(Blueprint $table) {
             $table->id();
-            $table->string('city');
-            $table->string('country');
+            $table->string('name');
+            $table->string(column: 'continent');
+            $table->string('iso_country', 2); 
+            $table->string('municipality');
+            $table->string('iata_code');
             $table->foreignId('registered_by')->nullable()->constrained('users');
             $table->timestamps();
+
+            $table->foreign('iso_country')->references('code')->on('countries')->onDelete('cascade');
         });
     }
 

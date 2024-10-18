@@ -25,7 +25,10 @@ return new class extends Migration
             $table->boolean('payment_received')->default(false);
             $table->float('revenue_or_loss');
             $table->string('processing_status');
-            $table->string('visa_outcome');
+            $table->enum('payment_status', ['paid', 'unpaid', 'partially_paid']);
+            $table->float('partially_paid_amount');
+            $table->float('remaining_amount');
+            $table->string('visa_outcome')->nullable();
             $table->foreignId('registered_by')->nullable()->constrained('users');
             $table->timestamps();
         });

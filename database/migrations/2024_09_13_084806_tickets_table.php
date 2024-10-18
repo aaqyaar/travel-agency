@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('customer_id')->constrained('customers');
             $table->foreignId('supplier_id')->constrained('suppliers');
-            $table->foreignId('from_destination_id')->constrained('destinations');
-            $table->foreignId('to_destination_id')->constrained('destinations');
+            $table->foreignId('from_destination_id')->constrained('destinations', 'id');
+            $table->foreignId('to_destination_id')->constrained('destinations', 'id');
             $table->string('trip_type');
             $table->string('ticket_type');
             $table->float('total_amount');
