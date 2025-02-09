@@ -1,0 +1,16 @@
+version: "3"
+services:
+  vito:
+    image: vitodeploy/vito:latest
+    ports:
+      - "8087:80"
+    environment:
+      APP_KEY: "base64:nZPi/HyX8PTUxF3H74QUveQl4An1R716mgln/2K4OB8="
+      NAME: "vito"
+      EMAIL: "abdizamedmo@gmail.com"
+      PASSWORD: "aaqyaar@10"
+    volumes:
+      - "vito-storage:/var/www/html/storage"
+volumes:
+  vito-storage:
+    driver: local
