@@ -5,5 +5,15 @@ services:
       dockerfile: Dockerfile
     ports:
       - 8090:8000
+    depends_on:
+      - mysql
     volumes:
       - "./storage:/var/www/html/storage"
+
+  mysql:
+    image: mysql:8.0.41
+    environment:
+      MYSQL_ROOT_PASSWORD: qaran@10
+      MYSQL_DATABASE: qaran
+      MYSQL_USER: root
+      MYSQL_PASSWORD: qaran@10
