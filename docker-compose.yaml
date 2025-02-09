@@ -1,0 +1,9 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8090:8000
+    volumes:
+      - "./storage:/var/www/html/storage"
