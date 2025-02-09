@@ -4,7 +4,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - 8090:8000
+      - 8080:8000
     depends_on:
       - mysql
     volumes:
@@ -17,3 +17,5 @@ services:
       MYSQL_DATABASE: qaran
       MYSQL_USER: root
       MYSQL_PASSWORD: qaran@10
+    ports:
+      - 3306:3306
