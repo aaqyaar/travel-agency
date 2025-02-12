@@ -14,4 +14,4 @@ USER www-data
 RUN npm install
 RUN npm run build
 
-RUN composer install --ignore-platform-req=ext-intl --no-interaction --optimize-autoloader --no-dev 
+RUN composer install --no-interaction --optimize-autoloader --no-dev --ignore-platform-reqs
