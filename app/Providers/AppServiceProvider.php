@@ -25,6 +25,5 @@ class AppServiceProvider extends ServiceProvider
         Filament::registerPages([
             Dashboard::class,
         ]);
-        Gate::policy(\Spatie\Permission\Models\Role::class, \App\Policies\RolePolicy::class);
     }
 }
