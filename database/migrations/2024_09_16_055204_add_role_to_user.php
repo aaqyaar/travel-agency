@@ -12,8 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('type')->after('registered_by')->default('user')->required();
-            $table->foreign('type')->references('name')->on('roles');
+            $table->string('type')->nullable()->after('registered_by')->default('user')->required();
         });
     }
 

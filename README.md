@@ -20,7 +20,7 @@ This is a travel system that allows users to book trips and manage their trips. 
 5. Run the following commands to seed the database and create a super admin user:
 
 ```bash
-php artisan db:seed --class=ShieldSeeder && php artisan shield:super-admin --user=1
+php artisan migrate:fresh --seed
 ```
 
 6. Run `php artisan serve`

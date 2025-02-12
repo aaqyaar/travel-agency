@@ -5,11 +5,9 @@ namespace Filament\Pages;
 use Filament\Facades\Filament;
 use Filament\Support\Facades\FilamentIcon;
 use Illuminate\Contracts\Support\Htmlable;
-use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 
 class Dashboard extends Page
 {
-    use HasPageShield;
 
     protected static string $routePath = '/';
 
